@@ -1,3 +1,12 @@
+/**
+ * ESLint configuration file
+ *
+ * An object must be exported from this file containing the
+ * configuration. Anything in this file can be overridden by suppling
+ * the corresponding CLI argument.
+ *
+ */
+
 module.exports = {
   "env": {
     "node": true,
