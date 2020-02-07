@@ -1,0 +1,19 @@
+{
+  "name": "path-param-matcher",
+  "version": "0.0.1",
+  "description": "Convert URL route paths into a RegExp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "url",
+    "param",
+    "parameter",
+    "http",
+    "regex",
+    "route"
+  ],
+  "author": "Pat Gaffney <pat@hypepat.com>",
+  "license": "MIT"
+}
