@@ -4,7 +4,8 @@
   "description": "Convert URL route paths into a RegExp",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint --fix --format table --cache ."
+    "lint": "eslint --fix --format table --cache .",
+    "test": "NODE_ENV=test mocha"
   },
   "keywords": [
     "url",
