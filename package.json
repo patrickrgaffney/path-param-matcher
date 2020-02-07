@@ -4,7 +4,7 @@
   "description": "Convert URL route paths into a RegExp",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint --fix --format table --cache ."
   },
   "keywords": [
     "url",
