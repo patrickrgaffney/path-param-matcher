@@ -1,0 +1,25 @@
+# dependencies
+node_modules
+.yarn-integrity
+
+# logs
+logs
+*.log
+
+# coverage
+coverage
+.nyc_output
+*.lconv
+
+# cache
+.npm
+.eslintcache
+.cache
+*.tsbuildinfo
+.vscode*
+
+# tarballs
+*.tgz
+
+# env files
+.env*
