@@ -18,4 +18,16 @@ describe('path-param-matcher', () => {
     expect(nada).to.throw(TypeError, expected)
     expect(error).to.throw(TypeError, expected)
   })
+
+  it('throws TypeError for paths without forward slash prefix', () => {
+    const empty = () => parser('')
+    const random = () => parser('abc')
+    const backslash = () => parser('\\')
+
+    const expected = 'path must begin with forward slash'
+
+    expect(empty).to.throw(TypeError, expected)
+    expect(random).to.throw(TypeError, expected)
+    expect(backslash).to.throw(TypeError, expected)
+  })
 })
