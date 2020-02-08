@@ -16,18 +16,16 @@ function parser(path) {
     throw new TypeError('path must begin with forward slash')
   }
 
-  // const segments = path.split('/')
-  // const pattern = segments.reduce((acc, seg) => {
-  //   if (seg.length === 0) {
-  //     return `${acc}/`
-  //   }
+  const segments = path.split('/')
+  const pattern = segments.reduce((acc, seg) => {
+    if (seg.length === 0) {
+      return `${acc}/`
+    }
 
-  //   return acc
-  // })
+    return acc
+  })
 
-  // return new RegExp(pattern)
-
-  return path
+  return new RegExp(`^${pattern}$`)
 }
 
 module.exports = parser

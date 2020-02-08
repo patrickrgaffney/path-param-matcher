@@ -30,4 +30,16 @@ describe('path-param-matcher', () => {
     expect(random).to.throw(TypeError, expected)
     expect(backslash).to.throw(TypeError, expected)
   })
+
+  it('matches "/" routes correctly', () => {
+    const path = '/'
+    const expected = new RegExp(/^\/$/)
+    const result = parser(path)
+
+    expect(expected).to.deep.eql(result)
+    expect(result.test('/')).to.be.true
+    expect(result.test('//')).to.be.false
+    expect(result.test('/aa/a')).to.be.false
+    expect(result.test('')).to.be.false
+  })
 })
