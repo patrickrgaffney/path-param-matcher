@@ -9,4 +9,8 @@ module.exports = {
   'globals': {
     'expect': true,
   },
+  'rules': {
+    // Allows us to make expect() calls without using return value.
+    'no-unused-expressions': [ 'off' ],
+  }
 }
