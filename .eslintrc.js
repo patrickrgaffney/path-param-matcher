@@ -110,7 +110,7 @@ module.exports = {
     "no-lone-blocks": [ "error" ],
     "no-loop-func": [ "error" ],
     "no-magic-numbers": [ "error", {
-      "ignore": [ 0, 1, 2 ],
+      "ignore": [ -1, 0, 1, 2 ],
       "enforceConst": true,
       "detectObjects": false,
     }],
