@@ -7,6 +7,9 @@
     "lint": "eslint --fix --format table --cache .",
     "test": "NODE_ENV=test mocha"
   },
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "keywords": [
     "url",
     "param",
