@@ -31,7 +31,7 @@ describe('path-param-matcher', () => {
     expect(backslash).to.throw(TypeError, expected)
   })
 
-  it('matches "/" routes correctly', () => {
+  it('matches "/" routes', () => {
     const path = '/'
     const expected = new RegExp(/^\/$/)
     const result = parser(path)
@@ -43,7 +43,7 @@ describe('path-param-matcher', () => {
     expect(result.test('/aa')).to.be.false
   })
 
-  it('matches "/{thing}" routes correctly', () => {
+  it('matches "/{thing}" routes', () => {
     const path = '/{thing}'
     const expected = new RegExp(/^\/(?<thing>[^/]+)$/)
     const result = parser(path)
@@ -54,5 +54,20 @@ describe('path-param-matcher', () => {
     expect(result.test('//')).to.be.false
     expect(result.test('/aa')).to.be.true
     expect(result.test('/aa/')).to.be.false
+  })
+
+  it('matches "/{some}/{thing}" routes', () => {
+    const path = '/{some}/{thing}'
+    const expected = new RegExp(/^\/(?<some>[^/]+)\/(?<thing>[^/]+)$/)
+    const result = parser(path)
+
+    expect(expected).to.deep.eql(result)
+    expect(result.test('/')).to.be.false
+    expect(result.test('')).to.be.false
+    expect(result.test('//')).to.be.false
+    expect(result.test('/aa')).to.be.false
+    expect(result.test('/aa/')).to.be.false
+    expect(result.test('/aa/bb')).to.be.true
+    expect(result.test('/aa/bb/')).to.be.false
   })
 })
