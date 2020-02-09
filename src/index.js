@@ -17,18 +17,24 @@ function parser(path) {
   }
 
   const segments = path.split('/')
-
   const pattern = segments.reduce((acc, seg) => {
     if (seg.length === 0) {
       return `${acc}/`
     } else if (seg[0] === '{' && seg[seg.length - 1] === '}') {
-      // TODO: check for :[regex]
+      const placeholderRegex = seg.indexOf(':')
+
+      if (placeholderRegex !== -1) {
+        const name = seg.substring(1, placeholderRegex)
+        const regex = seg.substring(placeholderRegex + 1, seg.length - 1)
+
+        return `${acc}/(?<${name}>${regex})`
+      }
       const name = seg.substring(1, seg.length - 1)
 
       return `${acc}/(?<${name}>[^/]+)`
     }
 
-    return acc
+    return `${acc}/${seg}`
   })
 
   return new RegExp(`^${pattern}$`)

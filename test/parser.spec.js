@@ -31,24 +31,24 @@ describe('path-param-matcher', () => {
     expect(backslash).to.throw(TypeError, expected)
   })
 
-  it('matches "/" routes', () => {
+  it('matches "/"', () => {
     const path = '/'
     const expected = new RegExp(/^\/$/)
     const result = parser(path)
 
-    expect(expected).to.deep.eql(result)
+    expect(result).to.deep.eql(expected)
     expect(result.test('/')).to.be.true
     expect(result.test('')).to.be.false
     expect(result.test('//')).to.be.false
     expect(result.test('/aa')).to.be.false
   })
 
-  it('matches "/{thing}" routes', () => {
+  it('matches "/{thing}"', () => {
     const path = '/{thing}'
     const expected = new RegExp(/^\/(?<thing>[^/]+)$/)
     const result = parser(path)
 
-    expect(expected).to.deep.eql(result)
+    expect(result).to.deep.eql(expected)
     expect(result.test('/')).to.be.false
     expect(result.test('')).to.be.false
     expect(result.test('//')).to.be.false
@@ -56,12 +56,12 @@ describe('path-param-matcher', () => {
     expect(result.test('/aa/')).to.be.false
   })
 
-  it('matches "/{some}/{thing}" routes', () => {
+  it('matches "/{some}/{thing}"', () => {
     const path = '/{some}/{thing}'
     const expected = new RegExp(/^\/(?<some>[^/]+)\/(?<thing>[^/]+)$/)
     const result = parser(path)
 
-    expect(expected).to.deep.eql(result)
+    expect(result).to.deep.eql(expected)
     expect(result.test('/')).to.be.false
     expect(result.test('')).to.be.false
     expect(result.test('//')).to.be.false
@@ -69,5 +69,24 @@ describe('path-param-matcher', () => {
     expect(result.test('/aa/')).to.be.false
     expect(result.test('/aa/bb')).to.be.true
     expect(result.test('/aa/bb/')).to.be.false
+  })
+
+  it('matches "/date/{yyyy:\\d\\d\\d\\d}/{mm:\\d\\d}/{dd:\\d\\d}"', () => {
+    const path = '/date/{yyyy:\\d\\d\\d\\d}/{mm:\\d\\d}/{dd:\\d\\d}'
+    const expected = new RegExp(/^\/date\/(?<yyyy>\d\d\d\d)\/(?<mm>\d\d)\/(?<dd>\d\d)$/)
+    const result = parser(path)
+
+    expect(result, 'RegExp').to.deep.eql(expected)
+    expect(result.test('/'), '/').to.be.false
+    expect(result.test(''), '').to.be.false
+    expect(result.test('//'), '//').to.be.false
+    expect(result.test('/aa'), '/aa').to.be.false
+    expect(result.test('/aa/'), '/aa/').to.be.false
+    expect(result.test('/aa/bb'), '/aa/bb').to.be.false
+    expect(result.test('/aa/bb/'), '/aa/bb/').to.be.false
+    expect(result.test('/date/2020/02/07'), '/date/2020/02/07').to.be.true
+    expect(result.test('/date/0000/00/00'), '/date/0000/00/00').to.be.true
+    expect(result.test('/date/0000/00/00/'), '/date/0000/00/00/').to.be.false
+    expect(result.test('/date/yyyy/mm/dd/'), '/date/yyyy/mm/dd/').to.be.false
   })
 })
