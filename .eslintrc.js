@@ -85,7 +85,7 @@ module.exports = {
     "no-case-declarations": [ "error" ],
     "no-constructor-return": [ "error" ],
     "no-div-regex": [ "error" ],
-    "no-else-return": [ "error", { "allowElseIf": false }],
+    "no-else-return": [ "error", { "allowElseIf": true }],
     "no-empty-function": [ "error", { "allow": []}],
     "no-empty-pattern": [ "error" ],
     "no-eq-null": [ "error" ],
