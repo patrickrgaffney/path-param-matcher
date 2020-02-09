@@ -11,12 +11,12 @@ describe('path-param-matcher', () => {
 
     const expected = 'path must be a string'
 
-    expect(number).to.throw(TypeError, expected)
-    expect(array).to.throw(TypeError, expected)
-    expect(object).to.throw(TypeError, expected)
-    expect(nil).to.throw(TypeError, expected)
-    expect(nada).to.throw(TypeError, expected)
-    expect(error).to.throw(TypeError, expected)
+    expect(number, 'number').to.throw(TypeError, expected)
+    expect(array, 'array').to.throw(TypeError, expected)
+    expect(object, 'object').to.throw(TypeError, expected)
+    expect(nil, 'null').to.throw(TypeError, expected)
+    expect(nada, 'undefined').to.throw(TypeError, expected)
+    expect(error, 'Error').to.throw(TypeError, expected)
   })
 
   it('throws TypeError for paths without forward slash prefix', () => {
@@ -26,9 +26,9 @@ describe('path-param-matcher', () => {
 
     const expected = 'path must begin with forward slash'
 
-    expect(empty).to.throw(TypeError, expected)
-    expect(random).to.throw(TypeError, expected)
-    expect(backslash).to.throw(TypeError, expected)
+    expect(empty, '""').to.throw(TypeError, expected)
+    expect(random, 'abc').to.throw(TypeError, expected)
+    expect(backslash, '\\').to.throw(TypeError, expected)
   })
 
   it('matches "/"', () => {
@@ -36,11 +36,11 @@ describe('path-param-matcher', () => {
     const expected = new RegExp(/^\/$/)
     const result = parser(path)
 
-    expect(result).to.deep.eql(expected)
-    expect(result.test('/')).to.be.true
-    expect(result.test('')).to.be.false
-    expect(result.test('//')).to.be.false
-    expect(result.test('/aa')).to.be.false
+    expect(result, 'RegExp').to.deep.eql(expected)
+    expect(result.test('/'), '/').to.be.true
+    expect(result.test(''), '').to.be.false
+    expect(result.test('//'), '//').to.be.false
+    expect(result.test('/aa'), '/aa').to.be.false
   })
 
   it('matches "/{thing}"', () => {
@@ -48,12 +48,12 @@ describe('path-param-matcher', () => {
     const expected = new RegExp(/^\/(?<thing>[^/]+)$/)
     const result = parser(path)
 
-    expect(result).to.deep.eql(expected)
-    expect(result.test('/')).to.be.false
-    expect(result.test('')).to.be.false
-    expect(result.test('//')).to.be.false
-    expect(result.test('/aa')).to.be.true
-    expect(result.test('/aa/')).to.be.false
+    expect(result, 'RegExp').to.deep.eql(expected)
+    expect(result.test('/'), '/').to.be.false
+    expect(result.test(''), '').to.be.false
+    expect(result.test('//'), '//').to.be.false
+    expect(result.test('/aa'), '/aa').to.be.true
+    expect(result.test('/aa/'), '/aa/').to.be.false
   })
 
   it('matches "/{some}/{thing}"', () => {
@@ -61,14 +61,14 @@ describe('path-param-matcher', () => {
     const expected = new RegExp(/^\/(?<some>[^/]+)\/(?<thing>[^/]+)$/)
     const result = parser(path)
 
-    expect(result).to.deep.eql(expected)
-    expect(result.test('/')).to.be.false
-    expect(result.test('')).to.be.false
-    expect(result.test('//')).to.be.false
-    expect(result.test('/aa')).to.be.false
-    expect(result.test('/aa/')).to.be.false
-    expect(result.test('/aa/bb')).to.be.true
-    expect(result.test('/aa/bb/')).to.be.false
+    expect(result, 'RegExp').to.deep.eql(expected)
+    expect(result.test('/'), '/').to.be.false
+    expect(result.test(''), '').to.be.false
+    expect(result.test('//'), '//').to.be.false
+    expect(result.test('/aa'), '/aa').to.be.false
+    expect(result.test('/aa/'), '/aa/').to.be.false
+    expect(result.test('/aa/bb'), '/aa/bb').to.be.true
+    expect(result.test('/aa/bb/'), '/aa/bb/').to.be.false
   })
 
   it('matches "/date/{yyyy:\\d\\d\\d\\d}/{mm:\\d\\d}/{dd:\\d\\d}"', () => {
