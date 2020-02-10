@@ -55,6 +55,21 @@ describe('path-param-matcher', () => {
     expect(result.test('/aa'), '/aa').to.be.false
   })
 
+  it('matches "/some/thing"', () => {
+    const path = '/some/thing'
+    const expected = new RegExp(/^\/some\/thing$/)
+    const result = parser(path)
+
+    expect(result, 'RegExp').to.deep.eql(expected)
+    expect(result.test('/'), '/').to.be.false
+    expect(result.test(''), '').to.be.false
+    expect(result.test('//'), '//').to.be.false
+    expect(result.test('/some'), '/some').to.be.false
+    expect(result.test('/some/'), '/some/').to.be.false
+    expect(result.test('/some/thing'), '/some/thing').to.be.true
+    expect(result.test('/some/thing/'), '/some/thing/').to.be.false
+  })
+
   it('matches "/{thing}"', () => {
     const path = '/{thing}'
     const expected = new RegExp(/^\/(?<thing>[^/]+)$/)

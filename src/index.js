@@ -25,7 +25,7 @@ const checkForExtraBrackets = (s = '') => {
  * the nest "/" or the end of the URL. Trailing slashes must be
  * explicitly handled.
  *
- * Placeholder can include an optional regex override, after a colon:
+ * Placeholders can include an optional regex override, after a colon:
  * e.g. "/date/{yyyy:\\d\\d\\d\\d}". Regular expressions including "{",
  * "}", or "/" are not supported and will throw a TypeError.
  */
