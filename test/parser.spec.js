@@ -33,10 +33,14 @@ describe('path-param-matcher', () => {
 
   it('throws TypeError for paths with illegal placeholder regex', () => {
     const containsSlash = () => parser('/date/2020/{mm:\\d\\d/\\d}/07')
+    const extraLeftBrace = () => parser('/date/2020/{mm:\\d{\\d\\d}/07')
+    const extraRightBrace = () => parser('/date/2020/{mm:}\\d\\d\\d}/07')
 
     const expected = 'path placeholder contains illegal regex'
 
     expect(containsSlash, 'contains slash').to.throw(TypeError, expected)
+    expect(extraLeftBrace, 'extra left brace').to.throw(TypeError, expected)
+    expect(extraRightBrace, 'extra right brace').to.throw(TypeError, expected)
   })
 
   it('matches "/"', () => {

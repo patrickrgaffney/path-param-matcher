@@ -6,6 +6,16 @@
 const illegalRegex = /\/\{[^}]*\/.*\}/
 
 /**
+ * Placeholder regexs cannot attempt to match '{' or '}'.
+ */
+
+const checkForExtraBrackets = (s = '') => {
+  if (s.split('{').length - 1 > 1 || s.split('}').length - 1 > 1) {
+    throw new TypeError('path placeholder contains illegal regex')
+  }
+}
+
+/**
  * Turn a string representation of a route into a RegExp, capturing
  * all of the patterns described in that string.
  *
@@ -34,6 +44,7 @@ function parser(path) {
     if (seg.length === 0) {
       return `${acc}/`
     } else if (seg[0] === '{' && seg[seg.length - 1] === '}') {
+      checkForExtraBrackets(seg)
       const placeholderRegex = seg.indexOf(':')
 
       if (placeholderRegex !== -1) {
