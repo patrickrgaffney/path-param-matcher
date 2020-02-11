@@ -70,6 +70,21 @@ describe('path-param-matcher', () => {
     expect(result.test('/some/thing/'), '/some/thing/').to.be.false
   })
 
+  it('matches "/some/thing/"', () => {
+    const path = '/some/thing/'
+    const expected = new RegExp(/^\/some\/thing\/$/)
+    const result = parser(path)
+
+    expect(result, 'RegExp').to.deep.eql(expected)
+    expect(result.test('/'), '/').to.be.false
+    expect(result.test(''), '').to.be.false
+    expect(result.test('//'), '//').to.be.false
+    expect(result.test('/some'), '/some').to.be.false
+    expect(result.test('/some/'), '/some/').to.be.false
+    expect(result.test('/some/thing'), '/some/thing').to.be.false
+    expect(result.test('/some/thing/'), '/some/thing/').to.be.true
+  })
+
   it('matches "/{thing}"', () => {
     const path = '/{thing}'
     const expected = new RegExp(/^\/(?<thing>[^/]+)$/)
@@ -81,6 +96,19 @@ describe('path-param-matcher', () => {
     expect(result.test('//'), '//').to.be.false
     expect(result.test('/aa'), '/aa').to.be.true
     expect(result.test('/aa/'), '/aa/').to.be.false
+  })
+
+  it('matches "/{thing}/"', () => {
+    const path = '/{thing}/'
+    const expected = new RegExp(/^\/(?<thing>[^/]+)\/$/)
+    const result = parser(path)
+
+    expect(result, 'RegExp').to.deep.eql(expected)
+    expect(result.test('/'), '/').to.be.false
+    expect(result.test(''), '').to.be.false
+    expect(result.test('//'), '//').to.be.false
+    expect(result.test('/aa'), '/aa').to.be.false
+    expect(result.test('/aa/'), '/aa/').to.be.true
   })
 
   it('matches "/{some}/{thing}"', () => {
@@ -96,6 +124,21 @@ describe('path-param-matcher', () => {
     expect(result.test('/aa/'), '/aa/').to.be.false
     expect(result.test('/aa/bb'), '/aa/bb').to.be.true
     expect(result.test('/aa/bb/'), '/aa/bb/').to.be.false
+  })
+
+  it('matches "/{some}/{thing}/"', () => {
+    const path = '/{some}/{thing}/'
+    const expected = new RegExp(/^\/(?<some>[^/]+)\/(?<thing>[^/]+)\/$/)
+    const result = parser(path)
+
+    expect(result, 'RegExp').to.deep.eql(expected)
+    expect(result.test('/'), '/').to.be.false
+    expect(result.test(''), '').to.be.false
+    expect(result.test('//'), '//').to.be.false
+    expect(result.test('/aa'), '/aa').to.be.false
+    expect(result.test('/aa/'), '/aa/').to.be.false
+    expect(result.test('/aa/bb'), '/aa/bb').to.be.false
+    expect(result.test('/aa/bb/'), '/aa/bb/').to.be.true
   })
 
   it('matches "/date/{yyyy:\\d\\d\\d\\d}/{mm:\\d\\d}/{dd:\\d\\d}"', () => {
@@ -114,6 +157,26 @@ describe('path-param-matcher', () => {
     expect(result.test('/date/2020/02/07'), '/date/2020/02/07').to.be.true
     expect(result.test('/date/0000/00/00'), '/date/0000/00/00').to.be.true
     expect(result.test('/date/0000/00/00/'), '/date/0000/00/00/').to.be.false
+    expect(result.test('/date/yyyy/mm/dd/'), '/date/yyyy/mm/dd/').to.be.false
+  })
+
+  it('matches "/date/{yyyy:\\d\\d\\d\\d}/{mm:\\d\\d}/{dd:\\d\\d}/"', () => {
+    const path = '/date/{yyyy:\\d\\d\\d\\d}/{mm:\\d\\d}/{dd:\\d\\d}/'
+    const expected = new RegExp(/^\/date\/(?<yyyy>\d\d\d\d)\/(?<mm>\d\d)\/(?<dd>\d\d)\/$/)
+    const result = parser(path)
+
+    expect(result, 'RegExp').to.deep.eql(expected)
+    expect(result.test('/'), '/').to.be.false
+    expect(result.test(''), '').to.be.false
+    expect(result.test('//'), '//').to.be.false
+    expect(result.test('/aa'), '/aa').to.be.false
+    expect(result.test('/aa/'), '/aa/').to.be.false
+    expect(result.test('/aa/bb'), '/aa/bb').to.be.false
+    expect(result.test('/aa/bb/'), '/aa/bb/').to.be.false
+    expect(result.test('/date/2020/02/07'), '/date/2020/02/07').to.be.false
+    expect(result.test('/date/0000/00/00'), '/date/0000/00/00').to.be.false
+    expect(result.test('/date/0000/00/00/'), '/date/0000/00/00/').to.be.true
+    expect(result.test('/date/0000/00/00/'), '/date/2020/02/07/').to.be.true
     expect(result.test('/date/yyyy/mm/dd/'), '/date/yyyy/mm/dd/').to.be.false
   })
 })
