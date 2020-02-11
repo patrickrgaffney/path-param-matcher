@@ -199,7 +199,6 @@ module.exports = {
       "ignoreDestructuring": false,
       "ignoreImports": true,
     }],
-    "capitalized-comments": [ "error", "always" ],
     "comma-dangle": [ "error", "always-multiline" ],
     "comma-spacing": [ "error", { "before": false, "after": true }],
     "comma-style": [ "error", "last" ],
