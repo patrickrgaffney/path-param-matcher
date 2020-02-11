@@ -1,0 +1,7 @@
+# tests
+test/*
+
+# configs
+.eslintrc.js
+.mocharc.js
+.npmrc
