@@ -1,0 +1,34 @@
+name: Tests
+
+on:
+  # Every push to `master`.
+  branches:
+    - master
+  paths:
+    - '*.js'
+
+  # All pull requests.
+  pull_request:
+    paths:
+      - '*.js'
+
+jobs:
+  test:
+    name: "Run tests with v${{ matrix.node }}"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [ '10', '12', '13' ]
+    steps:
+      # Check out repository to $GITHUB_WORKSPACE.
+      - name: "Check out source code"
+        uses: actions/checkout@v2
+
+      # Set up Node.js interpreter.
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - run: npm install
+      - run: npm test
