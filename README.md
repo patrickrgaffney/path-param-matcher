@@ -36,7 +36,10 @@ parser('/date/{:\\d\\d\\d\\d}/')
 
 ## API
 
-### `parser(path)`: returns `String`
+### `parser(path)`
+
+- returns `RegExp`
+- throws `TypeError`
 
 #### `path`: `String`
 
