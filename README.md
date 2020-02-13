@@ -25,7 +25,7 @@ parser('/some/thing/')
 parser('/{some}/{thing}')
 /** => new RegExp(/^\/(?<some>[^/]+)\/(?<thing>[^/]+)$/)
 
-/** Placeholders can provided their own regex. */
+/** Placeholders can provide their own regex. */
 parser('/date/{yyyy:\\d\\d\\d\\d}/{mm:\\d\\d}/{dd:\\d\\d}')
 /** => new RegExp(/^\/date\/(?<yyyy>\d\d\d\d)\/(?<mm>\d\d)\/(?<dd>\d\d)$/) */
 
