@@ -2,10 +2,11 @@ name: Tests
 
 on:
   # Every push to `master`.
-  branches:
-    - master
-  paths:
-    - '*.js'
+  push:
+    branches:
+      - master
+    paths:
+      - '*.js'
 
   # All pull requests.
   pull_request:
