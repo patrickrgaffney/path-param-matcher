@@ -16,6 +16,33 @@ const checkForExtraBrackets = (s = '') => {
 }
 
 /**
+ * Placeholders allow for the following patterns:
+ *
+ *  - {name}: matches anything but slash, assigned to "name".
+ *  - {name:\\w+}: matches "\w+", assigned to "name".
+ *  - {:\\w+}: matches "\w+", anonymous pattern.
+ */
+
+function handlePlaceholders(seg, acc) {
+  checkForExtraBrackets(seg)
+  const placeholderRegex = seg.indexOf(':')
+
+  if (placeholderRegex !== -1) {
+    const name = seg.substring(1, placeholderRegex)
+    const regex = seg.substring(placeholderRegex + 1, seg.length - 1)
+
+    if (name.length === 0) {
+      return `${acc}/(?:${regex})`
+    }
+
+    return `${acc}/(?<${name}>${regex})`
+  }
+  const name = seg.substring(1, seg.length - 1)
+
+  return `${acc}/(?<${name}>[^/]+)`
+}
+
+/**
  * Turn a string representation of a route into a RegExp, capturing
  * all of the patterns described in that string.
  *
@@ -27,7 +54,8 @@ const checkForExtraBrackets = (s = '') => {
  *
  * Placeholders can include an optional regex override, after a colon:
  * e.g. "/date/{yyyy:\\d\\d\\d\\d}". Regular expressions including "{",
- * "}", or "/" are not supported and will throw a TypeError.
+ * "}", or "/" are not supported and will throw a TypeError. Anonymous
+ * patterns are allowed, and do no include a name: "{:\\w+}".
  */
 
 function parser(path) {
@@ -44,18 +72,7 @@ function parser(path) {
     if (seg.length === 0) {
       return `${acc}/`
     } else if (seg[0] === '{' && seg[seg.length - 1] === '}') {
-      checkForExtraBrackets(seg)
-      const placeholderRegex = seg.indexOf(':')
-
-      if (placeholderRegex !== -1) {
-        const name = seg.substring(1, placeholderRegex)
-        const regex = seg.substring(placeholderRegex + 1, seg.length - 1)
-
-        return `${acc}/(?<${name}>${regex})`
-      }
-      const name = seg.substring(1, seg.length - 1)
-
-      return `${acc}/(?<${name}>[^/]+)`
+      return handlePlaceholders(seg, acc)
     }
 
     return `${acc}/${seg}`
