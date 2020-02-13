@@ -15,23 +15,33 @@ const parser = require('path-param-matcher')
 
 /** Basic routes. */
 parser('/')
-/** => new RegExp(/^\/$/)
+/**
+ * => new RegExp(/^\/$/)
+ */
 
 /** Trailing slashes must be explicit. */
 parser('/some/thing/')
-/** => new RegExp(/^\/some\/thing\/$/)
+/**
+ * => new RegExp(/^\/some\/thing\/$/)
+ */
 
 /** Named placeholders. */
 parser('/{some}/{thing}')
-/** => new RegExp(/^\/(?<some>[^/]+)\/(?<thing>[^/]+)$/)
+/**
+ * => new RegExp(/^\/(?<some>[^/]+)\/(?<thing>[^/]+)$/)
+ */
 
 /** Placeholders can provide their own regex. */
 parser('/date/{yyyy:\\d\\d\\d\\d}/{mm:\\d\\d}/{dd:\\d\\d}')
-/** => new RegExp(/^\/date\/(?<yyyy>\d\d\d\d)\/(?<mm>\d\d)\/(?<dd>\d\d)$/) */
+/**
+ * => new RegExp(/^\/date\/(?<yyyy>\d\d\d\d)\/(?<mm>\d\d)\/(?<dd>\d\d)$/)
+ */
 
 /** Anonymous placeholders. */
 parser('/date/{:\\d\\d\\d\\d}/')
-/** => new RegExp(/^\/date\/(?:\d\d\d\d)\/$/) */
+/**
+ * => new RegExp(/^\/date\/(?:\d\d\d\d)\/$/)
+ */
 ```
 
 ## API
