@@ -1,6 +1,6 @@
 # path-param-matcher
 
-Parse URL route paths into a `RegExp` with a syntax similar to [`chi`](https://github.com/go-chi/chi). Conceptually similar to [`path-to-regexp`](https://github.com/pillarjs/path-to-regexp), albeit simpler.
+Parse URL route paths into a `RegExp` with a syntax similar to [`chi`](https://github.com/go-chi/chi). Conceptually similar to [`path-to-regexp`](https://github.com/pillarjs/path-to-regexp), although simpler.
 
 ## Install
 
