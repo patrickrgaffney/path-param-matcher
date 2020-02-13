@@ -1,5 +1,7 @@
 # path-param-matcher
 
+![Tests](https://github.com/patrickrgaffney/path-param-matcher/workflows/Tests/badge.svg?branch=master)
+
 Parse URL route paths into a `RegExp` with a syntax similar to [`chi`](https://github.com/go-chi/chi). Conceptually similar to [`path-to-regexp`](https://github.com/pillarjs/path-to-regexp), although simpler.
 
 ## Install
