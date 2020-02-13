@@ -16,7 +16,8 @@
     "parameter",
     "http",
     "regex",
-    "route"
+    "route",
+    "path"
   ],
   "author": "Pat Gaffney <pat@hypepat.com>",
   "license": "MIT",
