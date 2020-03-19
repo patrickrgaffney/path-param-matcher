@@ -1,29 +1,20 @@
-/**
- * Regex to check for an illegal placeholder regular expression. A
- * placeholder regex is not allow to contain a forward slash "/".
- */
-
+// Regex to check for an illegal placeholder regular expression. A
+// placeholder regex is not allow to contain a forward slash "/".
 const illegalRegex = /\/\{[^}]*\/.*\}/
 
-/**
- * Placeholder regexs cannot attempt to match '{' or '}'.
- */
-
+// Placeholder regexs cannot attempt to match '{' or '}'.
 const checkForExtraBrackets = (s = '') => {
   if (s.split('{').length - 1 > 1 || s.split('}').length - 1 > 1) {
     throw new TypeError('path placeholder contains illegal regex')
   }
 }
 
-/**
- * Placeholders allow for the following patterns:
- *
- *  - {name}: matches anything but slash, assigned to "name".
- *  - {name:\\w+}: matches "\w+", assigned to "name".
- *  - {:\\w+}: matches "\w+", anonymous pattern.
- */
-
-function handlePlaceholders(seg, acc) {
+// Placeholders allow for the following patterns:
+//
+//  - {name}: matches anything but slash, assigned to "name".
+//  - {name:\\w+}: matches "\w+", assigned to "name".
+//  - {:\\w+}: matches "\w+", anonymous pattern.
+const handlePlaceholders = (seg, acc) => {
   checkForExtraBrackets(seg)
   const placeholderRegex = seg.indexOf(':')
 
@@ -42,23 +33,20 @@ function handlePlaceholders(seg, acc) {
   return `${acc}/(?<${name}>[^/]+)`
 }
 
-/**
- * Turn a string representation of a route into a RegExp, capturing
- * all of the patterns described in that string.
- *
- * The path argument must be a string that begins with a forward slash.
- *
- * A placeholder like {name} matches any sequence of character up to
- * the nest "/" or the end of the URL. Trailing slashes must be
- * explicitly handled.
- *
- * Placeholders can include an optional regex override, after a colon:
- * e.g. "/date/{yyyy:\\d\\d\\d\\d}". Regular expressions including "{",
- * "}", or "/" are not supported and will throw a TypeError. Anonymous
- * patterns are allowed, and do no include a name: "{:\\w+}".
- */
-
-function parser(path) {
+// Turn a string representation of a route into a RegExp, capturing
+// all of the patterns described in that string.
+//
+// The path argument must be a string that begins with a forward slash.
+//
+// A placeholder like {name} matches any sequence of character up to
+// the nest "/" or the end of the URL. Trailing slashes must be
+// explicitly handled.
+//
+// Placeholders can include an optional regex override, after a colon:
+// e.g. "/date/{yyyy:\\d\\d\\d\\d}". Regular expressions including "{",
+// "}", or "/" are not supported and will throw a TypeError. Anonymous
+// patterns are allowed, and do no include a name: "{:\\w+}".
+const parser = path => {
   if (typeof path !== 'string') {
     throw new TypeError('path must be a string')
   } else if (path[0] !== '/') {
